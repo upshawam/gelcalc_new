@@ -1,0 +1,115 @@
+/* Universal box-sizing */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Dark Theme */
+body {
+  font-family: Arial, sans-serif;
+  background: #121212;
+  color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Main Container */
+.container {
+  width: 90%;
+  max-width: 500px;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.8);
+  margin: 20px auto;
+}
+
+/* Headings */
+h1, h2 { text-align: center; margin: 10px 0; color: #f0f0f0; }
+
+/* Form Row */
+.form-row {
+  display: flex; justify-content: center; align-items: center;
+  gap: 8px; margin: 8px 0; flex-wrap: nowrap;
+}
+label { font-size: 0.9rem; color: #ccc; }
+input[type="number"], select {
+  width: 90px; font-size: 0.95rem; padding: 6px; text-align: center;
+  border-radius: 5px; border: 1px solid #444; background: #121212; color: #f0f0f0;
+}
+#milesDecimal { width: 60px; }
+
+/* Buttons */
+button, .btn {
+  padding: 8px 15px; font-size: 1rem; border: none; cursor: pointer;
+  border-radius: 5px; display: block; margin: 10px auto;
+}
+button:not(.clear-btn), .btn { background: #FFC107 !important; color: black !important; }
+.clear-btn { background: #dc3545 !important; color: white !important; }
+
+/* Pills */
+.pills-container {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 8px; margin: 16px auto;
+}
+.pill {
+  background: #2a2a2a; border-radius: 999px; padding: 6px 12px;
+  font-size: 0.9rem; font-weight: 500;
+}
+.pill strong { color: #FFC107; }
+
+/* Recipe Section */
+.recipe-section {
+  background: #f5f5f5; color: #222; border-radius: 8px;
+  padding: 16px; margin: 20px auto; display: table;
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+}
+.recipe-section h2 { color: #111; margin: 0 0 12px; font-weight: 700; text-align: center; }
+
+/* Recipe Table */
+.recipe-table { border-collapse: collapse; margin: 0 auto; }
+.recipe-table th, .recipe-table td {
+  padding: 6px 12px; border-bottom: 1px solid #ddd; text-align: left;
+}
+.recipe-table th { background: #e0e0e0; color: #111; font-weight: 600; }
+.recipe-table tr:last-child td { border-bottom: none; }
+
+/* Cart column alignment */
+.recipe-table td:last-child,
+.recipe-table th:last-child {
+  text-align: center;
+  width: 40px; /* keeps the cart column narrow */
+}
+
+/* Cart icon */
+.shop-link {
+  text-decoration: none;
+  font-size: 1em;
+  color: #666;
+}
+.shop-link:hover { color: #FFC107; opacity: 0.9; }
+
+/* Cost Comparison Table */
+.table {
+  border-collapse: collapse; margin: 12px auto; width: 100%;
+  background: #1e1e1e; border-radius: 6px; overflow: hidden;
+}
+.table th, .table td {
+  padding: 8px 10px; text-align: center; border-bottom: 1px solid #333;
+}
+.table th { background: #2a2a2a; color: #f0f0f0; font-weight: 600; }
+.table tr:nth-child(even) { background: #181818; }
+
+/* Small note */
+.small { font-size: 0.8rem; color: #aaa; text-align: center; margin-top: 8px; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form-row { gap: 6px; }
+  input[type="number"], select {
+    flex: 1; min-width: 0; font-size: 1.1rem; padding: 10px; height: 44px;
+  }
+  #milesWhole { flex: 2; }
+  #milesDecimal { flex: 1; }
+}
