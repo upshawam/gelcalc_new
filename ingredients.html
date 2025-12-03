@@ -3,69 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Why these ingredients – DIY Fueling Calculator</title>
-
-  <!-- GitHub-style Markdown CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css">
-
-  <style>
-    body {
-      background: #fff;
-      color: #24292f;
-      font-family: system-ui, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .markdown-body {
-      box-sizing: border-box;
-      min-width: 200px;
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 20px;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-      text-decoration: none;
-    }
-    .back-link button {
-      background: #2da44e;
-      border: none;
-      color: white;
-      padding: 8px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9em;
-    }
-    .back-link button:hover {
-      background: #2c974b;
-    }
-  </style>
+  <title>Gel Ingredients Calculator</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="markdown-body">
-    <!-- Back button -->
-    <a href="index.html" class="back-link">
-      <button>← Back to Calculator</button>
-    </a>
+  <div class="container">
+    <div class="card">
+      <h1 id="gelTitle">Gel Ingredients Calculator</h1>
 
-    <!-- README.md content will be injected here -->
-    <div id="content">Loading...</div>
+      <!-- Back to selection -->
+      <div style="text-align: center; margin-bottom: 20px;">
+        <a href="index.html" style="text-decoration: none;">
+          <button class="btn" style="background: #666 !important;">← Back to Gel Selection</button>
+        </a>
+      </div>
+
+      <!-- Input mode toggle -->
+      <div style="text-align: center; margin-bottom: 15px;">
+        <button id="modeToggle" class="btn" style="background: #444 !important;" onclick="toggleInputMode()">Switch to Volume Input</button>
+      </div>
+
+      <!-- Quantity input -->
+      <div class="form-row" id="gelsInput">
+        <label for="numGels">Number of Gels</label>
+        <input id="numGels" type="number" placeholder="10" />
+      </div>
+
+      <!-- Volume input (hidden by default) -->
+      <div class="form-row" id="volumeInput" style="display: none;">
+        <label for="totalVolume">Total Volume (ml)</label>
+        <input id="totalVolume" type="number" placeholder="500" />
+      </div>
+
+      <button class="btn" onclick="calculate()">Calculate Ingredients</button>
+
+      <!-- Outputs -->
+      <div id="out" style="margin-top: 16px;"></div>
+    </div>
   </div>
 
-  <!-- Markdown renderer -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    // Fetch and render your README.md
-    fetch('README.md')
-      .then(res => res.text())
-      .then(md => {
-        document.getElementById('content').innerHTML = marked.parse(md);
-      })
-      .catch(err => {
-        document.getElementById('content').innerHTML = "<p>Could not load README.md</p>";
-        console.error(err);
-      });
-  </script>
+  <script src="calculator.js?v=1.0.0"></script>
 </body>
 </html>

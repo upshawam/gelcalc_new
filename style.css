@@ -101,8 +101,46 @@ button:not(.clear-btn), .btn { background: #FFC107 !important; color: black !imp
 .table th { background: #2a2a2a; color: #f0f0f0; font-weight: 600; }
 .table tr:nth-child(even) { background: #181818; }
 
-/* Small note */
-.small { font-size: 0.8rem; color: #aaa; text-align: center; margin-top: 8px; }
+/* Gel Selection */
+.gel-selection {
+  text-align: center;
+  margin: 20px 0;
+}
+.gel-selection h3 {
+  margin-bottom: 15px;
+  color: #f0f0f0;
+}
+.gel-images {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin: 40px 0;
+}
+.gel-option {
+  cursor: pointer;
+  border: 4px solid transparent;
+  border-radius: 15px;
+  padding: 15px;
+  transition: all 0.3s;
+  background: #2a2a2a;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+.gel-option:hover {
+  border-color: #FFC107;
+  transform: scale(1.05);
+}
+.gel-option.selected {
+  border-color: #FFC107;
+  background: #333;
+}
+.gel-option img, .gel-option svg {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 10px;
+}
 
 /* Responsive */
 @media (max-width: 600px) {

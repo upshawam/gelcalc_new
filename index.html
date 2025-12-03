@@ -3,44 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DIY Fueling Calculator v1</title>
+  <title>Gel Selector</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <div class="card">
-      <h1>DIY Fueling Calculator</h1>
+      <h1>Select Your Gel</h1>
 
-      <!-- Core inputs -->
-      <div class="form-row">
-        <label for="weight">Body weight</label>
-        <input id="weight" type="number" placeholder="170" />
-        <select id="weightUnit">
-          <option value="lb" selected>lb</option>
-          <option value="kg">kg</option>
-        </select>
+      <!-- Gel selection -->
+      <div class="gel-selection">
+        <div class="gel-images">
+          <div class="gel-option selected" data-gel="precision">
+            <img src="https://cdn.shopify.com/s/files/1/1515/2714/files/pf30_gel30_clipped_1080x1080.png?v=1757622404" alt="Precision Fuel PF30" />
+          </div>
+          <div class="gel-option" data-gel="maurten">
+            <img src="https://cdn.shopify.com/s/files/1/1515/2714/files/Maurten100_Gel_Update25_1080x1080.png?v=1762198230" alt="Maurten GEL 100" />
+          </div>
+          <div class="gel-option" data-gel="sis">
+            <img src="https://cdn.shopify.com/s/files/1/1515/2714/files/sis_betafuel_neutral_ss_1080x1080.png?v=1738101884" alt="SIS Beta Fuel" />
+          </div>
+        </div>
       </div>
-
-      <div class="form-row">
-        <label for="milesWhole">Distance (miles)</label>
-        <select id="milesWhole"></select>
-        <span>.</span>
-        <select id="milesDecimal"></select>
-      </div>
-
-      <div class="form-row">
-        <label for="pace">Pace (min/mi)</label>
-        <select id="pace"></select>
-      </div>
-
-      <button class="btn" onclick="calculate()">Calculate</button>
-
-      <!-- Outputs -->
-      <div id="out" style="margin-top: 16px;"></div>
     </div>
   </div>
 
   <!-- Add a version string to force browsers to fetch the latest file -->
-  <script src="index.js?v=1.0.0"></script>
+  <script src="selector.js?v=1.0.0"></script>
 </body>
 </html>
