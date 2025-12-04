@@ -166,9 +166,6 @@ function calculate() {
 
   let html = `
     <div class="recipe-section">
-      <h3>${recipe.name} Recipe for ${inputDescription} (${totalCarbs}g total carbs)</h3>
-      <p>Carb ratio: ${ratioText}</p>
-      <p>${deviation}</p>
       <table class="recipe-table">
         <tr><th>Ingredient</th><th>Amount</th><th></th></tr>
         <tr>
