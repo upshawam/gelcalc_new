@@ -226,7 +226,7 @@ window.onload = () => {
   const gelType = getGelTypeFromURL();
   const recipe = RECIPES[gelType];
   if (recipe) {
-    document.getElementById('gelTitle').textContent = `${recipe.name} - Ingredients Calculator`;
+    document.getElementById('gelTitle').textContent = recipe.name;
   }
   document.getElementById('numGels').value = 10;
   calculate();
