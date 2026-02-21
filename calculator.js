@@ -18,6 +18,27 @@ const VOL_PER_G_CITRIC= 0.8;
 const ML_PER_G_CARBS = 100 / 65; // 65 g carbs per 100 ml
 const NA_PER_30G = 300;          // mg sodium per 30 g carbs
 
+function getFinalVolumeMl(totalCarbs, rounded = true) {
+  const naTargetTotal = (totalCarbs / 30) * NA_PER_30G;
+  const tableG = naTargetTotal / NA_TABLE;
+  const waterMl = totalCarbs * ML_PER_G_CARBS;
+  const volume =
+    waterMl +
+    (totalCarbs * VOL_PER_G_CARBS) +
+    (tableG * VOL_PER_G_SALT) +
+    ((totalCarbs * 0.004) * VOL_PER_G_CITRIC);
+  return rounded ? Math.round(volume) : volume;
+}
+
+function getCarbsFromFinalVolume(totalVolumeMl) {
+  const volumePerGram =
+    ML_PER_G_CARBS +
+    VOL_PER_G_CARBS +
+    (((NA_PER_30G / 30) / NA_TABLE) * VOL_PER_G_SALT) +
+    (0.004 * VOL_PER_G_CITRIC);
+  return totalVolumeMl / volumePerGram;
+}
+
 function getGelTypeFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get('gel') || 'precision';
@@ -37,16 +58,20 @@ function toggleInputMode() {
     const numGels = parseFloat(document.getElementById('numGels').value) || 10;
     const gelType = getGelTypeFromURL();
     const recipe = RECIPES[gelType];
-    const estimatedVolume = numGels * 100; // Rough estimate of 100ml per gel
-    document.getElementById('totalVolume').value = estimatedVolume;
+    const totalCarbs = recipe.carbsPerGel * numGels;
+    const finalVolume = getFinalVolumeMl(totalCarbs, true);
+    document.getElementById('totalVolume').value = finalVolume;
   } else {
     // Switch to gels mode
     volumeInput.style.display = 'none';
     gelsInput.style.display = 'block';
-    modeToggle.textContent = 'Switch to Volume Input';
-    // Copy current volume to gel estimate
+    modeToggle.textContent = 'Switch to Final Volume Input';
+    // Copy current final volume to gel estimate
     const totalVolume = parseFloat(document.getElementById('totalVolume').value) || 500;
-    const estimatedGels = Math.round(totalVolume / 100); // Rough estimate
+    const gelType = getGelTypeFromURL();
+    const recipe = RECIPES[gelType];
+    const totalCarbs = getCarbsFromFinalVolume(totalVolume);
+    const estimatedGels = Math.ceil(totalCarbs / recipe.carbsPerGel);
     document.getElementById('numGels').value = estimatedGels;
   }
   calculate();
@@ -105,6 +130,7 @@ function calculate() {
   }
 
   let numGels, totalCarbs, inputDescription;
+  let finalVolumeInput = null;
   
   const gelsInput = document.getElementById('gelsInput');
   
@@ -118,18 +144,17 @@ function calculate() {
     totalCarbs = recipe.carbsPerGel * numGels;
     inputDescription = `${numGels} gels`;
   } else {
-    // Calculate from total volume
+    // Calculate from final gel volume
     const totalVolume = parseFloat(document.getElementById('totalVolume').value || 0);
     if (totalVolume <= 0) {
       document.getElementById('out').innerHTML = '<p style="color: #FFC107; text-align: center;">Please enter a volume greater than 0.</p>';
       return;
     }
-    
-    // Estimate volume per gel (rough calculation based on typical gel volumes)
-    const volumePerGel = 100; // ml per gel estimate
-    numGels = Math.ceil(totalVolume / volumePerGel);
-    totalCarbs = recipe.carbsPerGel * numGels;
-    inputDescription = `${totalVolume}ml volume (${numGels} gels)`;
+
+    totalCarbs = getCarbsFromFinalVolume(totalVolume);
+    numGels = Math.ceil(totalCarbs / recipe.carbsPerGel);
+    inputDescription = `${totalVolume} ml final volume`;
+    finalVolumeInput = totalVolume;
   }
   const malt = totalCarbs * recipe.maltRatio;
   const fruc = totalCarbs * recipe.frucRatio;
@@ -147,6 +172,9 @@ function calculate() {
     (tableG * VOL_PER_G_SALT) +
     (citric * VOL_PER_G_CITRIC)
   );
+  const finalVolumeMl = finalVolumeInput !== null
+    ? Math.round(finalVolumeInput)
+    : totalVolumeMl;
 
   // Build recipe card with aligned cart column
   let ratioText = '';
@@ -215,7 +243,7 @@ function calculate() {
     <div class="pills-container">
       <div class="pill">Total carbs: <strong>${Math.round(totalCarbs)}</strong> g</div>
       <div class="pill">Sodium total: <strong>${Math.round(naTargetTotal)}</strong> mg</div>
-      <div class="pill">Final gel volume: <strong>${totalVolumeMl}</strong> ml</div>
+      <div class="pill">Final gel volume: <strong>${finalVolumeMl}</strong> ml</div>
     </div>
   `;
 
